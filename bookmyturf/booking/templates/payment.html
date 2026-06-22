@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+.payment-page {
+    min-height: calc(100vh - 72px);
+    display:flex; align-items:center; justify-content:center;
+    padding:60px 20px;
+    position:relative;
+}
+
+.payment-page::before {
+    content:'';
+    position:absolute; inset:0;
+    background:radial-gradient(ellipse 50% 60% at 50% 50%, rgba(0,255,135,0.05) 0%, transparent 70%);
+    pointer-events:none;
+}
+
+.payment-card {
+    width:100%; max-width:500px;
+    background:var(--dark2);
+    border:1px solid var(--border);
+    border-radius:24px;
+    overflow:hidden;
+    position:relative; z-index:1;
+    animation: fadeUp 0.5s ease both;
+}
+
+.payment-card::before {
+    content:''; display:block; height:4px;
+    background:linear-gradient(90deg, var(--green), var(--teal));
+}
+
+.payment-header {
+    padding:40px 44px 28px;
+    border-bottom:1px solid var(--border);
+}
+
+.payment-eyebrow {
+    font-family:'Space Mono',monospace;
+    font-size:10px; letter-spacing:3px; color:var(--green);
+    text-transform:uppercase; margin-bottom:14px;
+}
+
+.payment-title {
+    font-family:'Bebas Neue',sans-serif;
+    font-size:40px; letter-spacing:3px;
+}
+
+.payment-body {
+    padding: 32px 44px 44px;
+}
+
+.amount-display {
+    background:rgba(0,0,0,0.3);
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:28px 24px;
+    text-align:center;
+    margin-bottom:28px;
+}
+
+.amount-label {
+    font-size:11px; font-family:'Space Mono',monospace;
+    letter-spacing:2px; color:var(--text-dim);
+    text-transform:uppercase; margin-bottom:8px;
+}
+
+.amount-value {
+    font-family:'Bebas Neue',sans-serif;
+    font-size:56px; color:var(--green); letter-spacing:3px;
+    line-height:1;
+}
+
+.amount-note {
+    font-size:12px; color:var(--text-dim); margin-top:6px;
+}
+
+.pay-btn {
+    width:100%; padding:18px;
+    background:var(--green); color:var(--dark);
+    font-size:16px; font-weight:700; border:none;
+    border-radius:14px; cursor:pointer;
+    transition:all 0.25s; font-family:'DM Sans',sans-serif;
+    display:flex; align-items:center; justify-content:center; gap:10px;
+    letter-spacing:0.3px;
+}
+
+.pay-btn:hover {
+    background:var(--teal); transform:translateY(-2px);
+    box-shadow:0 12px 30px rgba(0,255,135,0.3);
+}
+
+.secure-note {
+    display:flex; align-items:center; justify-content:center;
+    gap:8px; margin-top:16px;
+    font-size:12px; color:var(--text-dim);
+    font-family:'Space Mono',monospace;
+}
+
+@keyframes fadeUp {
+    from { opacity:0; transform:translateY(20px); }
+    to   { opacity:1; transform:translateY(0); }
+}
+</style>
+
+<div class="payment-page">
+    <div class="payment-card">
+        <div class="payment-header">
+            <div class="payment-eyebrow">// Secure Checkout</div>
+            <div class="payment-title">COMPLETE<br>PAYMENT.</div>
+        </div>
+        <div class="payment-body">
+            <div class="amount-display">
+                <div class="amount-label">Amount Due</div>
+                <div class="amount-value">₹1,000</div>
+                <div class="amount-note">Turf Booking — BookMyTurf</div>
+            </div>
+
+            <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+            <button id="pay-btn" class="pay-btn">
+                🔒 Pay with Razorpay
+            </button>
+
+            <div class="secure-note">
+                🔐 256-bit SSL • Powered by Razorpay
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+var options = {
+    key: "YOUR_KEY_ID",
+    amount: "{{ payment.amount }}",
+    currency: "INR",
+    order_id: "{{ payment.id }}",
+    name: "BookMyTurf",
+    description: "Turf Booking",
+    theme: { color: "#00ff87" }
+};
+
+var rzp = new Razorpay(options);
+
+document.getElementById("pay-btn").onclick = function(e) {
+    rzp.open();
+    e.preventDefault();
+};
+</script>
+
+{% endblock %}

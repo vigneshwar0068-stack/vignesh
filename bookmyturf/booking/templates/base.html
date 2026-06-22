@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookMyTurf</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --green: #00ff87;
+            --green-dim: #00c96a;
+            --teal: #00e5cc;
+            --dark: #050a0e;
+            --dark2: #0b1117;
+            --dark3: #111b22;
+            --dark4: #172029;
+            --border: rgba(0,255,135,0.12);
+            --text: #e8f0ee;
+            --text-dim: #7a9990;
+            --glass: rgba(0,255,135,0.04);
+        }
+
+        *, *::before, *::after {
+            margin: 0; padding: 0; box-sizing: border-box;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--dark);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ── NAVBAR ─────────────────────────────────────── */
+        .navbar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 60px;
+            height: 72px;
+            background: rgba(5,10,14,0.85);
+            backdrop-filter: blur(24px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 28px;
+            letter-spacing: 3px;
+            color: var(--green);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            width: 32px; height: 32px;
+            background: var(--green);
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 16px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: all 0.2s;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-links a:hover {
+            color: var(--green);
+            background: rgba(0,255,135,0.07);
+        }
+
+        .nav-user {
+            font-family: 'Space Mono', monospace;
+            font-size: 12px;
+            color: var(--green);
+            padding: 6px 14px;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            margin-right: 6px;
+        }
+
+        .nav-cta {
+            background: var(--green) !important;
+            color: var(--dark) !important;
+            font-weight: 700 !important;
+            padding: 8px 20px !important;
+        }
+
+        .nav-cta:hover {
+            background: var(--teal) !important;
+            transform: translateY(-1px);
+        }
+
+        /* ── PAGE WRAPPER ───────────────────────────────── */
+        .page-body {
+            padding-top: 72px;
+            min-height: 100vh;
+        }
+
+        /* ── GLOBAL GLASS CARD ──────────────────────────── */
+        .glass-card {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            backdrop-filter: blur(20px);
+        }
+
+        /* ── BUTTONS ────────────────────────────────────── */
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 32px;
+            background: var(--green);
+            color: var(--dark);
+            font-weight: 700;
+            font-size: 15px;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.25s;
+            font-family: 'DM Sans', sans-serif;
+            letter-spacing: 0.3px;
+        }
+
+        .btn-primary:hover {
+            background: var(--teal);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(0,255,135,0.25);
+        }
+
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 32px;
+            background: transparent;
+            color: var(--green);
+            font-weight: 600;
+            font-size: 15px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.25s;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(0,255,135,0.07);
+            border-color: var(--green);
+            transform: translateY(-2px);
+        }
+
+        /* ── FORM ELEMENTS ──────────────────────────────── */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            margin-bottom: 8px;
+            font-family: 'Space Mono', monospace;
+        }
+
+        .form-input, .form-select {
+            width: 100%;
+            padding: 14px 18px;
+            background: rgba(0,0,0,0.35);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            color: var(--text);
+            font-size: 15px;
+            font-family: 'DM Sans', sans-serif;
+            transition: all 0.2s;
+            outline: none;
+        }
+
+        .form-input:focus, .form-select:focus {
+            border-color: var(--green);
+            background: rgba(0,255,135,0.04);
+            box-shadow: 0 0 0 3px rgba(0,255,135,0.08);
+        }
+
+        .form-select option {
+            background: var(--dark3);
+        }
+
+        /* ── FLASH MESSAGES ─────────────────────────────── */
+        .alert {
+            padding: 14px 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .alert-error {
+            background: rgba(255,60,60,0.1);
+            border: 1px solid rgba(255,60,60,0.25);
+            color: #ff8080;
+        }
+
+        /* ── NOISE OVERLAY ──────────────────────────────── */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 999;
+            opacity: 0.4;
+        }
+
+        /* ── FOOTER ─────────────────────────────────────── */
+        .footer {
+            text-align: center;
+            padding: 40px;
+            border-top: 1px solid var(--border);
+            color: var(--text-dim);
+            font-size: 13px;
+            font-family: 'Space Mono', monospace;
+        }
+
+        .footer span { color: var(--green); }
+
+        /* ── ANIMATIONS ─────────────────────────────────── */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse-green {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(0,255,135,0.3); }
+            50%       { box-shadow: 0 0 0 12px rgba(0,255,135,0); }
+        }
+
+        .fade-up { animation: fadeUp 0.6s ease both; }
+        .fade-up-2 { animation: fadeUp 0.6s 0.1s ease both; }
+        .fade-up-3 { animation: fadeUp 0.6s 0.2s ease both; }
+        .fade-up-4 { animation: fadeUp 0.6s 0.3s ease both; }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <a href="/" class="logo">
+        <div class="logo-icon">⚽</div>
+        BOOKMYTURF
+    </a>
+    <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/turfs/">Turfs</a>
+        {% if user.is_authenticated %}
+            <span class="nav-user">{{ user.username }}</span>
+            <a href="/logout/" class="nav-cta">Logout</a>
+        {% else %}
+            <a href="/login/">Login</a>
+            <a href="/signup/" class="nav-cta">Sign Up</a>
+        {% endif %}
+    </div>
+</nav>
+
+<div class="page-body">
+    {% block content %}{% endblock %}
+</div>
+
+<footer class="footer">
+    © 2026 <span>BookMyTurf</span> • Premium Sports Booking Platform
+</footer>
+
+</body>
+</html>

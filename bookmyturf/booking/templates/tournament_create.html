@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create Tournament | BookMyTurf</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--green:#00ff87;--teal:#00e5cc;--dark:#050a0e;--dark2:#0b1117;--dark3:#111b22;--dark4:#172029;--border:rgba(0,255,135,0.12);--text:#e8f0ee;--text-dim:#7a9990;}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--dark);color:var(--text);min-height:100vh;}
+.navbar{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:0 60px;height:72px;background:rgba(5,10,14,0.9);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:3px;color:var(--green);text-decoration:none;display:flex;align-items:center;gap:10px;}
+.logo-icon{width:32px;height:32px;background:var(--green);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;}
+.nav-links{display:flex;align-items:center;gap:8px;}
+.nav-links a{color:var(--text-dim);text-decoration:none;font-size:14px;padding:8px 16px;border-radius:8px;transition:all 0.2s;}
+.nav-links a:hover{color:var(--green);background:rgba(0,255,135,0.07);}
+
+.page{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:100px 20px 60px;position:relative;}
+.page::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(0,255,135,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,135,0.03) 1px,transparent 1px);background-size:50px 50px;mask-image:radial-gradient(ellipse 70% 80% at 50% 50%,black 30%,transparent 100%);pointer-events:none;}
+
+.form-card{width:100%;max-width:640px;background:var(--dark2);border:1px solid var(--border);border-radius:24px;overflow:hidden;position:relative;z-index:1;animation:fadeUp 0.5s ease both;}
+.form-card::before{content:'';display:block;height:4px;background:linear-gradient(90deg,var(--green),var(--teal));}
+.form-header{padding:40px 48px 28px;border-bottom:1px solid var(--border);}
+.eyebrow{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:3px;color:var(--green);text-transform:uppercase;margin-bottom:12px;}
+.form-title{font-family:'Bebas Neue',sans-serif;font-size:40px;letter-spacing:3px;line-height:1;}
+.form-sub{font-size:13px;color:var(--text-dim);margin-top:6px;}
+.form-body{padding:36px 48px 44px;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.form-group{margin-bottom:20px;}
+.form-label{display:block;font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim);margin-bottom:8px;font-family:'Space Mono',monospace;}
+.form-input,.form-select{width:100%;padding:14px 18px;background:rgba(0,0,0,0.45);border:1px solid rgba(255,255,255,0.07);border-radius:12px;color:var(--text);font-size:14px;font-family:'DM Sans',sans-serif;transition:all 0.2s;outline:none;}
+.form-input:focus,.form-select:focus{border-color:var(--green);background:rgba(0,255,135,0.03);box-shadow:0 0 0 3px rgba(0,255,135,0.08);}
+.form-input::placeholder{color:rgba(255,255,255,0.2);}
+.form-select option{background:var(--dark3);}
+.submit-btn{width:100%;padding:16px;background:var(--green);color:var(--dark);font-size:16px;font-weight:700;border:none;border-radius:14px;cursor:pointer;transition:all 0.25s;font-family:'DM Sans',sans-serif;margin-top:8px;display:flex;align-items:center;justify-content:center;gap:8px;}
+.submit-btn:hover{background:var(--teal);transform:translateY(-2px);box-shadow:0 12px 30px rgba(0,255,135,0.3);}
+.hint{font-size:12px;color:var(--text-dim);margin-top:6px;}
+.footer{text-align:center;padding:32px;border-top:1px solid var(--border);color:var(--text-dim);font-size:13px;font-family:'Space Mono',monospace;}
+.footer span{color:var(--green);}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+</style>
+</head>
+<body>
+<nav class="navbar">
+    <a href="/" class="logo"><div class="logo-icon">⚽</div>BOOKMYTURF</a>
+    <div class="nav-links">
+        <a href="/">Home</a><a href="/turfs/">Turfs</a><a href="/tournaments/">Tournaments</a>
+    </div>
+</nav>
+
+<div class="page">
+    <div class="form-card">
+        <div class="form-header">
+            <div class="eyebrow">// Step 1 of 2</div>
+            <div class="form-title">CREATE<br>TOURNAMENT.</div>
+            <p class="form-sub">Set up the basics — teams register in the next step.</p>
+        </div>
+        <div class="form-body">
+            <form method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label class="form-label">Tournament Name</label>
+                    <input class="form-input" type="text" name="name" placeholder="e.g. Koramangala Cup 2026" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Sport</label>
+                        <select class="form-select" name="sport" required>
+                            <option value="">Select sport</option>
+                            <option value="football-5v5">Football 5v5</option>
+                            <option value="football-10v10">Football 10v10</option>
+                            <option value="futsal">Futsal</option>
+                            <option value="snooker">Snooker</option>
+                            <option value="carrom">Carrom</option>
+                            <option value="ping-pong">Ping Pong</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Date</label>
+                        <input class="form-input" type="date" name="date" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Venue</label>
+                        <input class="form-input" type="text" name="venue" placeholder="BookMyTurf Arena" value="BookMyTurf Arena">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Max Teams</label>
+                        <select class="form-select" name="max_teams">
+                            <option value="4">4 Teams</option>
+                            <option value="8" selected>8 Teams</option>
+                            <option value="16">16 Teams</option>
+                        </select>
+                        <p class="hint">Must be a power of 2 for knockout bracket</p>
+                    </div>
+                </div>
+                <button type="submit" class="submit-btn">Next — Register Teams →</button>
+            </form>
+        </div>
+    </div>
+</div>
+<footer class="footer">© 2026 <span>BookMyTurf</span> • Premium Sports Booking Platform</footer>
+</body>
+</html>

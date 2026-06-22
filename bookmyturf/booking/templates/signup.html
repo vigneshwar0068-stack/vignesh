@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+.auth-page {
+    min-height: calc(100vh - 72px);
+    display: flex; align-items: center; justify-content: center;
+    padding: 60px 20px;
+    position: relative;
+}
+
+.auth-page::before {
+    content:'';
+    position:absolute; inset:0;
+    background: radial-gradient(ellipse 60% 60% at 50% 50%, rgba(0,255,135,0.05) 0%, transparent 70%);
+    pointer-events:none;
+}
+
+.auth-card {
+    width: 100%; max-width: 440px;
+    background: var(--dark2);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 48px 44px;
+    position: relative; z-index:1;
+    animation: fadeUp 0.5s ease both;
+}
+
+.auth-eyebrow {
+    font-family:'Space Mono',monospace;
+    font-size:10px; letter-spacing:3px; color:var(--green);
+    text-transform:uppercase; margin-bottom:14px;
+}
+
+.auth-title {
+    font-family:'Bebas Neue',sans-serif;
+    font-size:48px; letter-spacing:3px; line-height:1;
+    margin-bottom:6px;
+}
+
+.auth-sub {
+    color:var(--text-dim); font-size:14px; margin-bottom:36px;
+}
+
+.auth-sub a { color:var(--green); text-decoration:none; }
+.auth-sub a:hover { text-decoration:underline; }
+
+.form-group { margin-bottom:18px; }
+
+.form-label {
+    display:block; font-size:10px; font-weight:600;
+    letter-spacing:1.5px; text-transform:uppercase;
+    color:var(--text-dim); margin-bottom:8px;
+    font-family:'Space Mono',monospace;
+}
+
+.form-input {
+    width:100%; padding:14px 18px;
+    background:rgba(0,0,0,0.45);
+    border:1px solid rgba(255,255,255,0.07);
+    border-radius:12px; color:var(--text);
+    font-size:14px; font-family:'DM Sans',sans-serif;
+    transition:all 0.2s; outline:none;
+}
+
+.form-input:focus {
+    border-color:var(--green);
+    background:rgba(0,255,135,0.03);
+    box-shadow: 0 0 0 3px rgba(0,255,135,0.08);
+}
+
+.form-input::placeholder { color:rgba(255,255,255,0.2); }
+
+.submit-btn {
+    width:100%; padding:16px;
+    background:var(--green); color:var(--dark);
+    font-size:15px; font-weight:700; border:none;
+    border-radius:14px; cursor:pointer;
+    transition:all 0.25s; font-family:'DM Sans',sans-serif;
+    margin-top:8px;
+}
+
+.submit-btn:hover {
+    background:var(--teal); transform:translateY(-2px);
+    box-shadow:0 12px 30px rgba(0,255,135,0.3);
+}
+
+.alert-error {
+    padding:12px 16px; border-radius:10px;
+    background:rgba(255,60,60,0.08);
+    border:1px solid rgba(255,60,60,0.2);
+    color:#ff8080; font-size:13px; margin-bottom:20px;
+    display:flex; align-items:center; gap:8px;
+}
+
+.terms-note {
+    font-size:12px; color:var(--text-dim);
+    text-align:center; margin-top:16px; line-height:1.6;
+}
+
+@keyframes fadeUp {
+    from { opacity:0; transform:translateY(20px); }
+    to   { opacity:1; transform:translateY(0); }
+}
+</style>
+
+<div class="auth-page">
+    <div class="auth-card">
+        <div class="auth-eyebrow">// Join BookMyTurf</div>
+        <div class="auth-title">CREATE<br>ACCOUNT.</div>
+        <p class="auth-sub">Already have one? <a href="/login/">Sign in here</a></p>
+
+        {% if error %}
+        <div class="alert-error">⚠️ {{ error }}</div>
+        {% endif %}
+
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label class="form-label">Username</label>
+                <input class="form-input" type="text" name="username" placeholder="choose a username" required autofocus>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Email Address</label>
+                <input class="form-input" type="email" name="email" placeholder="you@example.com" required>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Password</label>
+                <input class="form-input" type="password" name="password" placeholder="min. 8 characters" required>
+            </div>
+            <button type="submit" class="submit-btn">Create Account →</button>
+        </form>
+
+        <p class="terms-note">By creating an account, you agree to our<br>Terms of Service and Privacy Policy.</p>
+    </div>
+</div>
+{% endblock %}

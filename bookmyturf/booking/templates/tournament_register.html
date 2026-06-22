@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Register Team | {{ tournament.name }}</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--green:#00ff87;--teal:#00e5cc;--dark:#050a0e;--dark2:#0b1117;--dark3:#111b22;--dark4:#172029;--border:rgba(0,255,135,0.12);--text:#e8f0ee;--text-dim:#7a9990;--red:#ff4d4d;}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--dark);color:var(--text);min-height:100vh;}
+.navbar{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:0 60px;height:72px;background:rgba(5,10,14,0.9);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:3px;color:var(--green);text-decoration:none;display:flex;align-items:center;gap:10px;}
+.logo-icon{width:32px;height:32px;background:var(--green);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;}
+.nav-links{display:flex;align-items:center;gap:8px;}
+.nav-links a{color:var(--text-dim);text-decoration:none;font-size:14px;padding:8px 16px;border-radius:8px;transition:all 0.2s;}
+.nav-links a:hover{color:var(--green);background:rgba(0,255,135,0.07);}
+
+.page{max-width:720px;margin:0 auto;padding:100px 20px 80px;}
+.progress-bar{display:flex;align-items:center;gap:12px;margin-bottom:40px;}
+.prog-step{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-dim);}
+.prog-step.done .prog-dot{background:var(--green);border-color:var(--green);}
+.prog-step.done{color:var(--green);}
+.prog-dot{width:24px;height:24px;border-radius:50%;border:2px solid var(--text-dim);display:flex;align-items:center;justify-content:center;font-size:11px;font-family:'Space Mono',monospace;}
+.prog-line{flex:1;height:1px;background:var(--border);}
+.t-info{background:var(--dark3);border:1px solid var(--border);border-radius:16px;padding:20px 24px;margin-bottom:32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+.t-info-name{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2px;}
+.t-info-meta{font-size:13px;color:var(--text-dim);}
+.slot-counter{font-family:'Space Mono',monospace;font-size:13px;color:var(--green);}
+
+.form-card{background:var(--dark2);border:1px solid var(--border);border-radius:24px;overflow:hidden;}
+.form-card::before{content:'';display:block;height:4px;background:linear-gradient(90deg,var(--green),var(--teal));}
+.section{padding:28px 36px;border-bottom:1px solid var(--border);}
+.section:last-child{border-bottom:none;}
+.section-title{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;margin-bottom:20px;color:var(--green);}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.form-group{margin-bottom:16px;}
+.form-label{display:block;font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim);margin-bottom:7px;font-family:'Space Mono',monospace;}
+.form-input{width:100%;padding:12px 16px;background:rgba(0,0,0,0.45);border:1px solid rgba(255,255,255,0.07);border-radius:10px;color:var(--text);font-size:14px;font-family:'DM Sans',sans-serif;transition:all 0.2s;outline:none;}
+.form-input:focus{border-color:var(--green);background:rgba(0,255,135,0.03);box-shadow:0 0 0 3px rgba(0,255,135,0.08);}
+.form-input::placeholder{color:rgba(255,255,255,0.2);}
+.form-input.small{padding:10px 14px;}
+
+.player-row{display:grid;grid-template-columns:60px 1fr;gap:10px;margin-bottom:10px;align-items:center;}
+.player-num{font-family:'Space Mono',monospace;font-size:12px;color:var(--text-dim);text-align:center;}
+.add-player-btn{display:flex;align-items:center;gap:8px;padding:10px 16px;background:rgba(0,255,135,0.06);border:1px dashed rgba(0,255,135,0.3);border-radius:10px;color:var(--green);font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;width:100%;margin-top:6px;transition:all 0.2s;}
+.add-player-btn:hover{background:rgba(0,255,135,0.1);}
+.remove-btn{background:none;border:none;color:var(--red);cursor:pointer;font-size:18px;padding:4px 8px;opacity:0.6;transition:opacity 0.2s;}
+.remove-btn:hover{opacity:1;}
+.submit-btn{width:100%;padding:16px;background:var(--green);color:var(--dark);font-size:16px;font-weight:700;border:none;border-radius:14px;cursor:pointer;transition:all 0.25s;font-family:'DM Sans',sans-serif;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:4px;}
+.submit-btn:hover{background:var(--teal);transform:translateY(-2px);box-shadow:0 12px 30px rgba(0,255,135,0.3);}
+.footer{text-align:center;padding:32px;border-top:1px solid var(--border);color:var(--text-dim);font-size:13px;font-family:'Space Mono',monospace;margin-top:40px;}
+.footer span{color:var(--green);}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+</style>
+</head>
+<body>
+<nav class="navbar">
+    <a href="/" class="logo"><div class="logo-icon">⚽</div>BOOKMYTURF</a>
+    <div class="nav-links">
+        <a href="/tournaments/">Tournaments</a>
+        <a href="/tournaments/{{ tournament.pk }}/">View Bracket</a>
+    </div>
+</nav>
+
+<div class="page">
+    <div class="progress-bar">
+        <div class="prog-step done"><div class="prog-dot">✓</div> Tournament Created</div>
+        <div class="prog-line"></div>
+        <div class="prog-step done"><div class="prog-dot">2</div> Register Team</div>
+    </div>
+
+    <div class="t-info">
+        <div>
+            <div class="t-info-name">{{ tournament.name }}</div>
+            <div class="t-info-meta">{{ tournament.get_sport_display }} • {{ tournament.date }} • {{ tournament.venue }}</div>
+        </div>
+        <div class="slot-counter">{{ tournament.get_registered_teams_count }} / {{ tournament.max_teams }} teams registered</div>
+    </div>
+
+    <div class="form-card">
+        <form method="POST" id="reg-form">
+            {% csrf_token %}
+
+            <!-- TEAM INFO -->
+            <div class="section">
+                <div class="section-title">// Team Details</div>
+                <div class="form-group">
+                    <label class="form-label">Team Name</label>
+                    <input class="form-input" type="text" name="team_name" placeholder="e.g. FC Koramangala" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Captain Name</label>
+                        <input class="form-input" type="text" name="captain_name" placeholder="Full name" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Captain Phone</label>
+                        <input class="form-input" type="text" name="phone" placeholder="+91 98765..." required>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PLAYERS -->
+            <div class="section">
+                <div class="section-title">// Player Roster</div>
+                <div style="display:grid;grid-template-columns:60px 1fr 80px 36px;gap:10px;margin-bottom:10px;">
+                    <div style="font-size:10px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase;font-family:'Space Mono',monospace;">Jersey</div>
+                    <div style="font-size:10px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase;font-family:'Space Mono',monospace;">Player Name</div>
+                    <div></div><div></div>
+                </div>
+
+                <div id="players-list">
+                    <!-- Player row 1 -->
+                    <div class="player-row" style="display:grid;grid-template-columns:60px 1fr 36px;gap:10px;margin-bottom:10px;animation:fadeIn 0.3s ease;">
+                        <input class="form-input small" type="number" name="jersey_1" placeholder="#" min="1" max="99" required>
+                        <input class="form-input small" type="text" name="player_name_1" placeholder="Player name" required>
+                        <div></div>
+                    </div>
+                </div>
+
+                <button type="button" class="add-player-btn" onclick="addPlayer()">
+                    + Add Player
+                </button>
+            </div>
+
+            <!-- SUBMIT -->
+            <div class="section">
+                <button type="submit" class="submit-btn">
+                    ⚽ Register Team
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<footer class="footer">© 2026 <span>BookMyTurf</span> • Premium Sports Booking Platform</footer>
+
+<script>
+let playerCount = 1;
+
+function addPlayer() {
+    playerCount++;
+    const list = document.getElementById('players-list');
+    const div = document.createElement('div');
+    div.style.cssText = 'display:grid;grid-template-columns:60px 1fr 36px;gap:10px;margin-bottom:10px;animation:fadeIn 0.3s ease;';
+    div.innerHTML = `
+        <input class="form-input small" type="number" name="jersey_${playerCount}" placeholder="#" min="1" max="99">
+        <input class="form-input small" type="text" name="player_name_${playerCount}" placeholder="Player name">
+        <button type="button" class="remove-btn" onclick="this.parentElement.remove()">×</button>
+    `;
+    list.appendChild(div);
+}
+</script>
+</body>
+</html>

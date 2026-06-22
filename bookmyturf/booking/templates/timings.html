@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+.timings-page {
+    min-height: calc(100vh - 72px);
+    display:flex; align-items:center; justify-content:center;
+    padding:60px 20px;
+}
+
+.timings-card {
+    width:100%; max-width:560px;
+    background:var(--dark2);
+    border:1px solid var(--border);
+    border-radius:24px;
+    padding:52px 48px;
+    animation: fadeUp 0.5s ease both;
+}
+
+.timings-eyebrow {
+    font-family:'Space Mono',monospace;
+    font-size:10px; letter-spacing:3px; color:var(--green);
+    text-transform:uppercase; margin-bottom:14px;
+}
+
+.timings-title {
+    font-family:'Bebas Neue',sans-serif;
+    font-size:44px; letter-spacing:3px; margin-bottom:8px;
+}
+
+.timings-sub {
+    color:var(--text-dim); font-size:14px; margin-bottom:36px;
+}
+
+.time-section-label {
+    font-size:11px; font-family:'Space Mono',monospace;
+    letter-spacing:2px; color:var(--text-dim);
+    text-transform:uppercase; margin-bottom:14px;
+    padding-bottom:10px; border-bottom:1px solid var(--border);
+}
+
+.slots-grid {
+    display:grid; grid-template-columns:1fr 1fr 1fr;
+    gap:10px; margin-bottom:32px;
+}
+
+.slot-btn {
+    display:block; padding:14px 12px;
+    background:rgba(0,0,0,0.3);
+    border:1px solid var(--border);
+    border-radius:12px;
+    text-decoration:none;
+    text-align:center;
+    transition:all 0.25s;
+    cursor:pointer;
+}
+
+.slot-time {
+    font-family:'Space Mono',monospace;
+    font-size:14px; font-weight:700; color:var(--text);
+    display:block;
+}
+
+.slot-period {
+    font-size:10px; color:var(--text-dim);
+    display:block; margin-top:3px;
+    letter-spacing:1px; text-transform:uppercase;
+}
+
+.slot-btn:hover {
+    border-color:var(--green);
+    background:rgba(0,255,135,0.07);
+    transform:translateY(-2px);
+}
+
+.slot-btn:hover .slot-time { color:var(--green); }
+
+@keyframes fadeUp {
+    from { opacity:0; transform:translateY(20px); }
+    to   { opacity:1; transform:translateY(0); }
+}
+</style>
+
+<div class="timings-page">
+    <div class="timings-card">
+        <div class="timings-eyebrow">// Select Session</div>
+        <div class="timings-title">PICK YOUR<br>TIMING.</div>
+        <p class="timings-sub">Choose a time slot to proceed with booking.</p>
+
+        <div class="time-section-label">Morning Slots</div>
+        <div class="slots-grid">
+            <a href="/booking/" class="slot-btn">
+                <span class="slot-time">06:00</span>
+                <span class="slot-period">AM</span>
+            </a>
+            <a href="/booking/" class="slot-btn">
+                <span class="slot-time">07:00</span>
+                <span class="slot-period">AM</span>
+            </a>
+            <a href="/booking/" class="slot-btn">
+                <span class="slot-time">08:00</span>
+                <span class="slot-period">AM</span>
+            </a>
+        </div>
+
+        <div class="time-section-label">Evening Slots</div>
+        <div class="slots-grid">
+            <a href="/booking/" class="slot-btn">
+                <span class="slot-time">06:00</span>
+                <span class="slot-period">PM</span>
+            </a>
+            <a href="/booking/" class="slot-btn">
+                <span class="slot-time">07:00</span>
+                <span class="slot-period">PM</span>
+            </a>
+            <a href="/booking/" class="slot-btn">
+                <span class="slot-time">08:00</span>
+                <span class="slot-period">PM</span>
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
